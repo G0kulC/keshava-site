@@ -6,6 +6,7 @@ import { categories, defaultVariant } from '@/data'
 import { discountPct, formatINR, packQty } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { useQuote } from '@/store/quote'
+import { WishlistButton } from './WishlistButton'
 import type { Product } from '@/types'
 
 const MAX_CHIPS = 4
@@ -58,6 +59,7 @@ export function ProductCard({ product, priority }: { product: Product; priority?
       className="group flex flex-col overflow-hidden rounded-3xl border border-border/70 bg-card transition-[box-shadow,border-color] hover:border-brand-600/30 hover:shadow-xl hover:shadow-brand-900/5"
     >
       {/* Photo — kept clean so the printed brand mark is never covered */}
+      <div className="relative">
       <Link to={href} className="relative block aspect-square overflow-hidden bg-muted" aria-label={product.name}>
         {img && <img src={img.thumb} alt={img.alt} width={600} height={600} loading={priority ? 'eager' : 'lazy'} decoding="async" className="size-full object-cover" />}
         {hover && (
@@ -75,6 +77,9 @@ export function ProductCard({ product, priority }: { product: Product; priority?
           View details <ChevronRight className="size-3.5" />
         </span>
       </Link>
+      {/* Small corner heart, outside the link so tapping it doesn't open the product */}
+      <WishlistButton product={product} className="absolute top-2.5 right-2.5 size-9 text-base shadow-sm backdrop-blur sm:top-3 sm:right-3" />
+      </div>
 
       <div className="flex min-w-0 flex-1 flex-col p-3 sm:p-5">
         {cat && <p className="text-[11px] font-semibold tracking-wider text-brand-600 uppercase">{cat.name}</p>}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Logo } from '@/components/common/Logo'
 import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { nav, policies, site } from '@/config/site'
+import { directionsUrl } from '@/lib/maps'
 import { categories } from '@/data'
 import { areaPages } from '@/data/seo'
 import { telLink, waLink } from '@/lib/whatsapp'
@@ -70,7 +71,7 @@ export function Footer() {
           </li>
           <li className="flex gap-2.5">
             <MapPin className="mt-0.5 size-4 shrink-0 text-marigold" />
-            <a href={site.mapsUrl} target="_blank" rel="noreferrer" className="hover:text-marigold">
+            <a href={directionsUrl} target="_blank" rel="noreferrer" className="hover:text-marigold">
               {site.legalName}, {site.address}
             </a>
           </li>

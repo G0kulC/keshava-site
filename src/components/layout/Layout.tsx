@@ -6,6 +6,7 @@ import { Footer } from './Footer'
 import { Header } from './Header'
 import { MobileActionBar } from './MobileActionBar'
 import { QuoteDrawer } from './QuoteDrawer'
+import { WishlistDrawer } from './WishlistDrawer'
 
 /** Scroll to top and update <head> (title, meta, canonical, JSON-LD) on every navigation. */
 function RouteEffects() {
@@ -40,6 +41,7 @@ export function Layout() {
       <Footer />
       <MobileActionBar />
       <QuoteDrawer />
+      <WishlistDrawer />
     </div>
   )
 }

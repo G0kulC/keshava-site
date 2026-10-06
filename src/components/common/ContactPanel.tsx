@@ -3,6 +3,7 @@ import { CheckCircle2, ChevronRight, Mail, MapPin, Phone } from 'lucide-react'
 import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { site } from '@/config/site'
+import { directionsUrl } from '@/lib/maps'
 import { useOpenStatus } from '@/hooks/useOpenStatus'
 import { cn } from '@/lib/utils'
 import { waLink } from '@/lib/whatsapp'
@@ -76,7 +77,7 @@ export function ContactPanel() {
       </ul>
 
       <a
-        href={site.mapsUrl}
+        href={directionsUrl}
         target="_blank"
         rel="noreferrer"
         className="group mt-2 flex items-center gap-3 rounded-2xl border border-border p-3 transition hover:border-brand-600/40 hover:shadow-md"
