@@ -6,6 +6,7 @@ import { PageHero } from '@/components/common/PageHero'
 import { Select } from '@/components/common/Select'
 import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { site } from '@/config/site'
+import { directionsUrl, mapEmbedUrl } from '@/lib/maps'
 import { cn } from '@/lib/utils'
 import { telLink, waLink } from '@/lib/whatsapp'
 
@@ -112,7 +113,7 @@ export default function Contact() {
             </p>
             <p className="text-sm text-muted-foreground">Please message us before visiting so we can keep samples ready for you.</p>
             <div className="flex flex-wrap gap-2">
-              <a href={site.mapsUrl} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center gap-2 rounded-full bg-brand-700 px-5 text-sm font-semibold text-white hover:bg-brand-900">
+              <a href={directionsUrl} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center gap-2 rounded-full bg-brand-700 px-5 text-sm font-semibold text-white hover:bg-brand-900">
                 <Navigation className="size-4" /> Get directions
               </a>
               <a href={telLink} className="inline-flex h-11 items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold hover:border-brand-600">
@@ -122,7 +123,7 @@ export default function Contact() {
           </div>
           <iframe
             title={`Map to ${site.legalName}`}
-            src={`https://www.google.com/maps?q=${site.geo ? `${site.geo.lat},${site.geo.lng}` : encodeURIComponent(site.address)}&z=17&output=embed`}
+            src={mapEmbedUrl}
             className="h-72 w-full border-0 lg:h-full lg:min-h-[380px]"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"

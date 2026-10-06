@@ -9,6 +9,7 @@ import { BlurFade } from '@/components/ui/blur-fade'
 import { DotPattern } from '@/components/ui/dot-pattern'
 import { paths } from '@/config/routes'
 import { site } from '@/config/site'
+import { directionsUrl } from '@/lib/maps'
 import { categories, featuredProducts } from '@/data'
 import { areaPages, type AreaPage } from '@/data/seo'
 
@@ -77,7 +78,7 @@ export default function Area({ area }: { area: AreaPage }) {
               </li>
             ))}
           </ul>
-          <a href={site.mapsUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-brand-700 px-5 text-sm font-semibold text-white hover:bg-brand-900">
+          <a href={directionsUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-brand-700 px-5 text-sm font-semibold text-white hover:bg-brand-900">
             <Navigation className="size-4" /> Directions to our unit
           </a>
         </div>
