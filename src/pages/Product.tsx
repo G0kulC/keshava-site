@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import { SectionHeading } from '@/components/common/SectionHeading'
 import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { ProductCard } from '@/components/shop/ProductCard'
+import { WishlistButton } from '@/components/shop/WishlistButton'
 import { BlurFade } from '@/components/ui/blur-fade'
 import { ShineBorder } from '@/components/ui/shine-border'
 import { defaultVariant, getCategory, getProduct, relatedProducts } from '@/data'
@@ -83,6 +84,7 @@ function ProductView({ slug }: { slug: string }) {
                 />
               </AnimatePresence>
               {off > 0 && <span className="absolute top-4 left-4 rounded-full bg-kumkum px-3 py-1 text-xs font-bold text-white">Save {off}%</span>}
+              <WishlistButton product={product} className="absolute top-4 right-4 size-11 text-lg shadow-sm backdrop-blur" />
             </div>
             {product.images.length > 1 && (
               <div className="mt-3 grid grid-cols-5 gap-2">

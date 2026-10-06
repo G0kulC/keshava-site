@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { Menu, Phone, ShoppingCart, X } from 'lucide-react'
+import { Heart, Menu, Phone, ShoppingCart, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Logo } from '@/components/common/Logo'
@@ -8,6 +8,7 @@ import { nav, site } from '@/config/site'
 import { cn } from '@/lib/utils'
 import { telLink } from '@/lib/whatsapp'
 import { useQuote } from '@/store/quote'
+import { useWishlist } from '@/store/wishlist'
 import { paths } from '@/config/routes'
 
 const announcements = ['Bulk orders', 'Custom logo printing', 'On-time dispatch', `Made in ${site.location}`]
@@ -16,6 +17,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const { count, setOpen } = useQuote()
+  const wishlist = useWishlist()
   const { pathname } = useLocation()
 
   useEffect(() => {
@@ -99,6 +101,27 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => wishlist.setOpen(true)}
+              className="relative grid size-10 place-items-center rounded-full border border-border bg-card transition hover:border-brand-600 hover:text-kumkum"
+              aria-label={`Open wishlist, ${wishlist.count} saved`}
+              title="Wishlist"
+            >
+              <Heart className={cn('size-4', wishlist.count > 0 && 'fill-kumkum text-kumkum')} />
+              <AnimatePresence>
+                {wishlist.count > 0 && (
+                  <motion.span
+                    key={wishlist.count}
+                    initial={{ scale: 0.4, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.4, opacity: 0 }}
+                    className="absolute -top-1 -right-1 grid min-w-5 place-items-center rounded-full bg-marigold px-1 text-[11px] font-bold text-brand-900"
+                  >
+                    {wishlist.count > 99 ? '99+' : wishlist.count}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
             <button
               onClick={() => setOpen(true)}
               className="relative flex h-10 items-center gap-2 rounded-full border border-border bg-card px-3.5 font-display text-[15px] font-semibold tracking-[-0.01em] transition hover:border-brand-600 hover:text-brand-700"

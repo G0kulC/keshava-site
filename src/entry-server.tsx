@@ -7,6 +7,7 @@ import { SITE_URL } from './config/routes'
 import { allPaths, getPageMeta } from './seo/meta'
 import { renderHead } from './seo/head'
 import { QuoteProvider } from './store/quote'
+import { WishlistProvider } from './store/wishlist'
 
 const handler = createStaticHandler(routes)
 
@@ -20,7 +21,9 @@ export async function render(url: string) {
   const { prelude } = await prerenderToNodeStream(
     <StrictMode>
       <QuoteProvider>
-        <StaticRouterProvider router={router} context={context} hydrate={false} />
+        <WishlistProvider>
+          <StaticRouterProvider router={router} context={context} hydrate={false} />
+        </WishlistProvider>
       </QuoteProvider>
     </StrictMode>,
   )

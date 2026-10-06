@@ -4,13 +4,16 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import { routes } from './routes'
 import { QuoteProvider } from './store/quote'
+import { WishlistProvider } from './store/wishlist'
 
 const router = createBrowserRouter(routes)
 
 const app = (
   <StrictMode>
     <QuoteProvider>
-      <RouterProvider router={router} />
+      <WishlistProvider>
+        <RouterProvider router={router} />
+      </WishlistProvider>
     </QuoteProvider>
   </StrictMode>
 )
