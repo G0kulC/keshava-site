@@ -1,0 +1,42 @@
+[
+  {
+    "id": 63,
+    "slug": "custom-printed-bags",
+    "name": "Custom Printed Bags",
+    "description": "",
+    "count": 8,
+    "image": "/images/categories/custom-print-bag-600x600.png"
+  },
+  {
+    "id": 61,
+    "slug": "jute-bags",
+    "name": "Jute Bags",
+    "description": "",
+    "count": 14,
+    "image": "/images/categories/jutebags-600x600.png"
+  },
+  {
+    "id": 62,
+    "slug": "marriage-gift-bags",
+    "name": "Marriage & Gift Bags",
+    "description": "",
+    "count": 11,
+    "image": "/images/categories/giftbag-600x600.png"
+  },
+  {
+    "id": 59,
+    "slug": "non-woven-bags",
+    "name": "Non‑Woven Bags",
+    "description": "",
+    "count": 5,
+    "image": "/images/categories/nonwovenbags-600x600.png"
+  },
+  {
+    "id": 64,
+    "slug": "shopping-bags",
+    "name": "Shopping Bags",
+    "description": "",
+    "count": 12,
+    "image": "/images/categories/shoping-bags-600x600.png"
+  }
+]

@@ -1,0 +1,60 @@
+// Single source of truth for business details. Later this can come from the admin panel.
+export const site = {
+  name: 'Keshava Fabrics',
+  legalName: 'Sri Keshava Fabrics',
+  tagline: 'Eco-friendly bags, made for every occasion',
+  founder: 'Mr. Mahendran',
+  phone: '+91 93602 86234',
+  phoneRaw: '919360286234',
+  phone2: '+91 78128 93175',
+  phone2Raw: '917812893175',
+  email: 'info@keshavafabrics.com',
+  address: '289, Anna Nagar 2nd Street, Near Madha Kovil, Bhavani – 638301',
+  location: 'Bhavani, Tamil Nadu',
+  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=289+Anna+Nagar+2nd+Street+Near+Madha+Kovil+Bhavani+638301',
+  // From the live site footer. Used for the "open now" badge (IST).
+  hours: 'Mon–Fri · 9:00 AM – 5:00 PM',
+  openDays: [1, 2, 3, 4, 5], // 0 = Sunday
+  openHour: 9,
+  closeHour: 17,
+  gsmRange: '20–150 GSM',
+} as const
+
+/**
+ * Business terms used in the policy pages. These are sensible defaults —
+ * confirm each value with the owner before going live.
+ */
+export const terms = {
+  updated: '2026-10-07',
+  readyStockDispatch: '2–4 working days',
+  customOrderLead: 'confirmed in your quotation (usually after design approval)',
+  advancePercent: 50,
+  quoteValidityDays: 7,
+  returnWindowDays: 7,
+  reportDamageHours: 48,
+  refundDays: '7–10 working days',
+  quantityTolerance: '±5%',
+  gsmTolerance: '±5%',
+  jurisdiction: 'courts in Tamil Nadu, India',
+  // Optional legal details — shown on policy pages only when filled in.
+  legalName: 'Sri Keshava Fabrics',
+  address: '289, Anna Nagar 2nd Street, Near Madha Kovil, Bhavani – 638301, Tamil Nadu',
+  gstin: '',
+} as const
+
+export const nav = [
+  { label: 'Shop', to: '/shop' },
+  { label: 'Customized Bags', to: '/customized-bags' },
+  { label: 'Bulk Order', to: '/bulk-order' },
+  { label: 'About', to: '/about' },
+  { label: 'Blog', to: '/blog' },
+  { label: 'Contact', to: '/contact' },
+] as const
+
+export const policies = [
+  { label: 'Shipping Policy', to: '/policies/shipping' },
+  { label: 'Return & Refund', to: '/policies/returns' },
+  { label: 'Bulk Order Policy', to: '/policies/bulk-orders' },
+  { label: 'Privacy Policy', to: '/policies/privacy' },
+  { label: 'Terms & Conditions', to: '/policies/terms' },
+] as const
