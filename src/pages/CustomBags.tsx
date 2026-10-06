@@ -14,6 +14,7 @@ import { MagicCard } from '@/components/ui/magic-card'
 import { site } from '@/config/site'
 import { cn } from '@/lib/utils'
 import { waLink } from '@/lib/whatsapp'
+import { paths } from '@/config/routes'
 
 const bagTypes = [
   { kind: 'd-cut' as BagKind, name: 'D-Cut Bag', tag: 'Supermarket', best: 'Grocery & billing counters', note: 'Most cost-effective for daily wholesale use.' },
@@ -116,7 +117,7 @@ export default function CustomBags() {
         <div className="container-page grid gap-10 lg:grid-cols-2">
           <div>
             <SectionHeading eyebrow="GSM guide" title="Not sure which thickness?" description="GSM is the fabric weight — higher GSM means a stronger, longer-lasting bag." className="mb-6" />
-            <Link to="/blog/how-to-choose-gsm-for-non-woven-bags" className="inline-block py-2 text-sm font-semibold text-brand-700 hover:underline">
+            <Link to={paths.post('how-to-choose-gsm-for-non-woven-bags')} className="inline-block py-2 text-sm font-semibold text-brand-700 hover:underline">
               Read the full GSM guide →
             </Link>
           </div>

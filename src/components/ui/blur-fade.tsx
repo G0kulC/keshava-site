@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import {
   AnimatePresence,
   motion,
@@ -9,6 +9,7 @@ import {
   type UseInViewOptions,
   type Variants,
 } from "motion/react"
+import { isLandingRender } from "@/lib/intro"
 
 type MarginType = UseInViewOptions["margin"]
 
@@ -45,6 +46,8 @@ export function BlurFade({
   ...props
 }: BlurFadeProps) {
   const ref = useRef(null)
+  // Above-the-fold intros render visible on the prerendered landing page (see lib/intro).
+  const [skipIntro] = useState(() => !inView && isLandingRender())
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin })
   const isInView = !inView || inViewResult
   const defaultVariants: Variants = {
@@ -74,7 +77,7 @@ export function BlurFade({
     <AnimatePresence>
       <motion.div
         ref={ref}
-        initial="hidden"
+        initial={skipIntro ? false : "hidden"}
         animate={isInView ? "visible" : "hidden"}
         exit="hidden"
         variants={combinedVariants}

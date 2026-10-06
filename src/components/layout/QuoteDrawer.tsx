@@ -6,6 +6,7 @@ import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { formatINR } from '@/lib/format'
 import { quoteMessage, waLink } from '@/lib/whatsapp'
 import { useQuote } from '@/store/quote'
+import { paths } from '@/config/routes'
 
 export function QuoteDrawer() {
   const { items, open, setOpen, setQty, remove, clear, total } = useQuote()
@@ -60,7 +61,7 @@ export function QuoteDrawer() {
                 </div>
                 <p className="font-medium">Your cart is empty</p>
                 <p className="text-sm text-muted-foreground">Add bags with the pack size you need, then send the whole list on WhatsApp in one tap.</p>
-                <Link to="/shop" onClick={() => setOpen(false)} className="rounded-full bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white">
+                <Link to={paths.shop} onClick={() => setOpen(false)} className="rounded-full bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white">
                   Browse bags
                 </Link>
               </div>
@@ -72,7 +73,7 @@ export function QuoteDrawer() {
                       <motion.li key={i.key} layout exit={{ opacity: 0, x: 40 }} className="flex gap-3 py-4">
                         {i.image && <img src={i.image} alt="" className="size-16 shrink-0 rounded-lg bg-muted object-cover" />}
                         <div className="min-w-0 flex-1">
-                          <Link to={`/product/${i.slug}`} onClick={() => setOpen(false)} className="line-clamp-2 text-sm font-medium hover:text-brand-700">
+                          <Link to={paths.product(i.slug)} onClick={() => setOpen(false)} className="line-clamp-2 text-sm font-medium hover:text-brand-700">
                             {i.name}
                           </Link>
                           {i.variantLabel && <p className="text-xs text-muted-foreground">{i.variantLabel}</p>}
@@ -126,11 +127,11 @@ export function QuoteDrawer() {
                   </a>
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>
-                      <Link to="/policies/shipping" onClick={() => setOpen(false)} className="underline-offset-2 hover:text-brand-700 hover:underline">
+                      <Link to={paths.policy('shipping')} onClick={() => setOpen(false)} className="underline-offset-2 hover:text-brand-700 hover:underline">
                         Shipping
                       </Link>
                       {' · '}
-                      <Link to="/policies/returns" onClick={() => setOpen(false)} className="underline-offset-2 hover:text-brand-700 hover:underline">
+                      <Link to={paths.policy('returns')} onClick={() => setOpen(false)} className="underline-offset-2 hover:text-brand-700 hover:underline">
                         Returns
                       </Link>
                     </span>

@@ -1,10 +1,11 @@
 import { motion } from 'motion/react'
 import { ArrowRight, Boxes, CalendarDays, Phone, RefreshCw, Scale, ShieldCheck, Truck } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { BlurFade } from '@/components/ui/blur-fade'
 import { DotPattern } from '@/components/ui/dot-pattern'
+import { paths, type PolicySlug } from '@/config/routes'
 import { site, terms } from '@/config/site'
 import { getPolicy, policyPages, type Policy as PolicyT } from '@/data/policies'
 import { formatDate } from '@/lib/format'
@@ -14,8 +15,7 @@ import NotFound from '@/pages/NotFound'
 
 const icons = { truck: Truck, refresh: RefreshCw, boxes: Boxes, shield: ShieldCheck, scale: Scale }
 
-export default function Policy() {
-  const { slug = '' } = useParams()
+export default function Policy({ slug }: { slug: PolicySlug }) {
   const policy = getPolicy(slug)
   return policy ? <PolicyView key={policy.slug} policy={policy} /> : <NotFound />
 }
@@ -38,10 +38,6 @@ function PolicyView({ policy }: { policy: PolicyT }) {
     return () => io.disconnect()
   }, [policy])
 
-  useEffect(() => {
-    document.title = `${policy.title} — ${site.name}`
-  }, [policy.title])
-
   const others = policyPages.filter((p) => p.slug !== policy.slug)
 
   return (
@@ -58,7 +54,7 @@ function PolicyView({ policy }: { policy: PolicyT }) {
                 return (
                   <Link
                     key={p.slug}
-                    to={`/policies/${p.slug}`}
+                    to={paths.policy(p.slug as PolicySlug)}
                     aria-current={on ? 'page' : undefined}
                     className={cn(
                       'relative flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors',
@@ -191,7 +187,7 @@ function PolicyView({ policy }: { policy: PolicyT }) {
               {others.map((p) => {
                 const I = icons[p.icon]
                 return (
-                  <Link key={p.slug} to={`/policies/${p.slug}`} className="group flex min-w-0 items-center gap-4 rounded-2xl border border-border bg-card p-4 transition hover:border-brand-600/40 hover:shadow-md">
+                  <Link key={p.slug} to={paths.policy(p.slug as PolicySlug)} className="group flex min-w-0 items-center gap-4 rounded-2xl border border-border bg-card p-4 transition hover:border-brand-600/40 hover:shadow-md">
                     <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700">
                       <I className="size-5" />
                     </span>

@@ -59,12 +59,15 @@ export function ProductCard({ product, priority }: { product: Product; priority?
     >
       {/* Photo — kept clean so the printed brand mark is never covered */}
       <Link to={href} className="relative block aspect-square overflow-hidden bg-muted" aria-label={product.name}>
-        {img && <img src={img.thumb} alt={img.alt} loading={priority ? 'eager' : 'lazy'} className="size-full object-cover" />}
+        {img && <img src={img.thumb} alt={img.alt} width={600} height={600} loading={priority ? 'eager' : 'lazy'} decoding="async" className="size-full object-cover" />}
         {hover && (
           <img
             src={hover.thumb}
             alt=""
+            width={600}
+            height={600}
             loading="lazy"
+            decoding="async"
             className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           />
         )}

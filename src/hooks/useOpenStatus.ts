@@ -37,8 +37,10 @@ export function getOpenStatus(): OpenStatus {
 
 /** Re-evaluates every minute so the badge stays correct while the page is open. */
 export function useOpenStatus() {
-  const [status, setStatus] = useState(getOpenStatus)
+  // null until mounted: the status depends on the visitor's clock, not the build time.
+  const [status, setStatus] = useState<OpenStatus | null>(null)
   useEffect(() => {
+    setStatus(getOpenStatus())
     const t = setInterval(() => setStatus(getOpenStatus()), 60_000)
     return () => clearInterval(t)
   }, [])

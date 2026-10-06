@@ -7,6 +7,7 @@ import { Select } from '@/components/common/Select'
 import { SectionHeading } from '@/components/common/SectionHeading'
 import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { ProcessSteps } from '@/components/home/ProcessSteps'
+import { BulkEstimator, type EstimateLine } from '@/components/shop/BulkEstimator'
 import { site } from '@/config/site'
 import { categories, products } from '@/data'
 import { waLink } from '@/lib/whatsapp'
@@ -28,6 +29,16 @@ export default function BulkOrder() {
   const [contact, setContact] = useState({ name: '', city: '', date: '' })
 
   const update = (id: number, patch: Partial<Row>) => setRows((r) => r.map((x) => (x.id === id ? { ...x, ...patch } : x)))
+
+  // From the estimator: fill the first line if it's still untouched, otherwise append.
+  const addFromEstimate = ({ category, product, qty }: EstimateLine) => {
+    setRows((rs) => {
+      const line = { category, product, qty: String(qty) }
+      const blank = rs.length === 1 && !rs[0].product && !rs[0].color && !rs[0].size
+      return blank ? [{ ...rs[0], ...line }] : [...rs, { ...newRow(), ...line }]
+    })
+    setTimeout(() => document.getElementById('enquiry-lines')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150)
+  }
   const totalQty = rows.reduce((n, r) => n + (Number(r.qty) || 0), 0)
 
   const message = [
@@ -55,9 +66,10 @@ export default function BulkOrder() {
         eyebrow="Bulk enquiry"
         title="Order in bulk — mix any colours, sizes and quantities"
         description="Add each combination as a line. We'll reply with one consolidated quotation and a dispatch plan."
+        aside={<BulkEstimator onAdd={addFromEstimate} />}
       />
 
-      <section className="container-page grid gap-8 py-12 lg:grid-cols-[1fr_360px]">
+      <section id="enquiry-lines" className="container-page grid scroll-mt-24 gap-8 py-12 lg:grid-cols-[1fr_360px]">
         <div className="space-y-3">
           <AnimatePresence initial={false}>
             {rows.map((r, i) => {

@@ -1,3 +1,5 @@
+import { paths } from '@/config/routes'
+
 // Single source of truth for business details. Later this can come from the admin panel.
 export const site = {
   name: 'Keshava Fabrics',
@@ -11,7 +13,11 @@ export const site = {
   email: 'info@keshavafabrics.com',
   address: '289, Anna Nagar 2nd Street, Near Madha Kovil, Bhavani – 638301',
   location: 'Bhavani, Tamil Nadu',
-  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=289+Anna+Nagar+2nd+Street+Near+Madha+Kovil+Bhavani+638301',
+  // Exact pin shared by the owner — used for every "Directions" link.
+  mapsUrl: 'https://maps.app.goo.gl/eeZaU6sK7cRhmgTE6',
+  // TODO: paste the pin's coordinates here so the embedded map shows the exact spot
+  // (open the link above → tap the red pin → copy the numbers like 11.4458, 77.6827).
+  geo: null as { lat: number; lng: number } | null,
   // From the live site footer. Used for the "open now" badge (IST).
   hours: 'Mon–Fri · 9:00 AM – 5:00 PM',
   openDays: [1, 2, 3, 4, 5], // 0 = Sunday
@@ -43,18 +49,18 @@ export const terms = {
 } as const
 
 export const nav = [
-  { label: 'Shop', to: '/shop' },
-  { label: 'Customized Bags', to: '/customized-bags' },
-  { label: 'Bulk Order', to: '/bulk-order' },
-  { label: 'About', to: '/about' },
-  { label: 'Blog', to: '/blog' },
-  { label: 'Contact', to: '/contact' },
+  { label: 'Shop', to: paths.shop },
+  { label: 'Customized Bags', to: paths.customBags },
+  { label: 'Bulk Order', to: paths.bulkOrder },
+  { label: 'About', to: paths.about },
+  { label: 'Blog', to: paths.blog },
+  { label: 'Contact', to: paths.contact },
 ] as const
 
 export const policies = [
-  { label: 'Shipping Policy', to: '/policies/shipping' },
-  { label: 'Return & Refund', to: '/policies/returns' },
-  { label: 'Bulk Order Policy', to: '/policies/bulk-orders' },
-  { label: 'Privacy Policy', to: '/policies/privacy' },
-  { label: 'Terms & Conditions', to: '/policies/terms' },
+  { label: 'Shipping Policy', to: paths.policy('shipping') },
+  { label: 'Return & Refund', to: paths.policy('returns') },
+  { label: 'Bulk Order Policy', to: paths.policy('bulk-orders') },
+  { label: 'Privacy Policy', to: paths.policy('privacy') },
+  { label: 'Terms & Conditions', to: paths.policy('terms') },
 ] as const

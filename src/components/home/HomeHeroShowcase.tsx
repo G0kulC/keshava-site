@@ -6,6 +6,7 @@ import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { products } from '@/data'
 import { discountPct, formatINR, packQty } from '@/lib/format'
 import { cn } from '@/lib/utils'
+import { paths } from '@/config/routes'
 
 /**
  * Animated "how ordering works" demo using real products:
@@ -108,7 +109,7 @@ export function HomeHeroShowcase() {
             transition={{ type: 'spring', stiffness: 120, damping: 16 }}
             className="relative overflow-hidden rounded-[2rem] border-4 border-white bg-card shadow-2xl shadow-brand-900/15"
           >
-            <Link to={`/product/${p.slug}`} aria-label={p.name}>
+            <Link to={paths.product(p.slug)} aria-label={p.name}>
               <img src={p.images[0].thumb} alt={p.images[0].alt} className="aspect-square w-full object-cover" />
             </Link>
             {/* tap ripple on "pick" */}

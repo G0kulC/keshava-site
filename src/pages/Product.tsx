@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils'
 import { productEnquiry, waLink } from '@/lib/whatsapp'
 import NotFound from '@/pages/NotFound'
 import { useQuote } from '@/store/quote'
+import { paths } from '@/config/routes'
 
 export default function Product() {
   const { slug = '' } = useParams()
@@ -56,11 +57,11 @@ function ProductView({ slug }: { slug: string }) {
         <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1 text-sm text-muted-foreground">
           <Link to="/" className="hover:text-foreground">Home</Link>
           <ChevronRight className="size-3.5" />
-          <Link to="/shop" className="hover:text-foreground">Shop</Link>
+          <Link to={paths.shop} className="hover:text-foreground">Shop</Link>
           {category && (
             <>
               <ChevronRight className="size-3.5" />
-              <Link to={`/shop?category=${category.slug}`} className="hover:text-foreground">{category.name}</Link>
+              <Link to={paths.category(category.slug)} className="hover:text-foreground">{category.name}</Link>
             </>
           )}
         </nav>

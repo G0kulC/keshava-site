@@ -1,10 +1,12 @@
-import { Clock, MapPin, Phone } from 'lucide-react'
+import { Clock, Mail, MapPin, Phone } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Logo } from '@/components/common/Logo'
 import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { nav, policies, site } from '@/config/site'
 import { categories } from '@/data'
+import { areaPages } from '@/data/seo'
 import { telLink, waLink } from '@/lib/whatsapp'
+import { paths } from '@/config/routes'
 
 const YEAR = new Date().getFullYear()
 
@@ -31,7 +33,7 @@ export function Footer() {
         <FooterCol title="Shop by category">
           {categories.map((c) => (
             <li key={c.slug}>
-              <Link to={`/shop?category=${c.slug}`} className="hover:text-marigold">
+              <Link to={paths.category(c.slug)} className="hover:text-marigold">
                 {c.name}
               </Link>
             </li>
@@ -51,12 +53,26 @@ export function Footer() {
         <FooterCol title="Reach us">
           <li className="flex gap-2.5">
             <Phone className="mt-0.5 size-4 shrink-0 text-marigold" />
-            <a href={telLink} className="hover:text-marigold">
-              {site.phone}
+            <span className="flex flex-col">
+              <a href={telLink} className="hover:text-marigold">
+                {site.phone}
+              </a>
+              <a href={`tel:+${site.phone2Raw}`} className="hover:text-marigold">
+                {site.phone2}
+              </a>
+            </span>
+          </li>
+          <li className="flex gap-2.5">
+            <Mail className="mt-0.5 size-4 shrink-0 text-marigold" />
+            <a href={`mailto:${site.email}`} className="break-all hover:text-marigold">
+              {site.email}
             </a>
           </li>
           <li className="flex gap-2.5">
-            <MapPin className="mt-0.5 size-4 shrink-0 text-marigold" /> {site.location}
+            <MapPin className="mt-0.5 size-4 shrink-0 text-marigold" />
+            <a href={site.mapsUrl} target="_blank" rel="noreferrer" className="hover:text-marigold">
+              {site.legalName}, {site.address}
+            </a>
           </li>
           <li className="flex gap-2.5">
             <Clock className="mt-0.5 size-4 shrink-0 text-marigold" /> {site.hours}
@@ -64,9 +80,26 @@ export function Footer() {
         </FooterCol>
       </div>
 
+      <div className="container-page relative border-t border-white/10 py-6 text-sm">
+        <p className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <span className="font-semibold text-white">Areas we serve:</span>
+          {areaPages.map((a) => (
+            <Link key={a.slug} to={paths.area(a.slug)} className="hover:text-marigold">
+              {a.place === 'Bhavani' ? 'Bag shop in Bhavani' : `Non-woven bags in ${a.place}`}
+            </Link>
+          ))}
+          <Link to={paths.industries} className="hover:text-marigold">
+            Industries & use cases
+          </Link>
+          <Link to={paths.gallery} className="hover:text-marigold">
+            Gallery
+          </Link>
+        </p>
+      </div>
+
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col gap-3 py-6 pb-24 text-xs md:flex-row md:items-center md:justify-between md:pb-6">
-          <p>© {YEAR} {site.name}. All rights reserved.</p>
+          <p>© {YEAR} {site.legalName}, Bhavani. All rights reserved.</p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {policies.map((p) => (
               <li key={p.to}>

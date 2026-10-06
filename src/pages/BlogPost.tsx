@@ -8,6 +8,7 @@ import { getPost, posts } from '@/data'
 import { formatDate } from '@/lib/format'
 import { waLink } from '@/lib/whatsapp'
 import NotFound from '@/pages/NotFound'
+import { paths } from '@/config/routes'
 
 export default function BlogPost() {
   const { slug = '' } = useParams()
@@ -21,7 +22,7 @@ export default function BlogPost() {
     <article>
       <motion.div style={{ scaleX: progress }} className="fixed inset-x-0 top-0 z-50 h-1 origin-left bg-marigold" />
       <div className="container-page max-w-3xl py-10 md:py-16">
-        <Link to="/blog" className="inline-flex items-center gap-1.5 py-2 text-sm font-medium text-muted-foreground hover:text-foreground">
+        <Link to={paths.blog} className="inline-flex items-center gap-1.5 py-2 text-sm font-medium text-muted-foreground hover:text-foreground">
           <ArrowLeft className="size-4" /> All articles
         </Link>
         <BlurFade>
@@ -47,7 +48,7 @@ export default function BlogPost() {
         <h2 className="text-2xl font-semibold">Keep reading</h2>
         <div className="mt-6 grid gap-6 md:grid-cols-3">
           {more.map((p) => (
-            <Link key={p.slug} to={`/blog/${p.slug}`} className="group">
+            <Link key={p.slug} to={paths.post(p.slug)} className="group">
               <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-muted">{p.cover && <img src={p.cover} alt="" loading="lazy" className="size-full object-cover transition group-hover:scale-105" />}</div>
               <h3 className="mt-3 font-sans font-semibold group-hover:text-brand-700">{p.title}</h3>
             </Link>

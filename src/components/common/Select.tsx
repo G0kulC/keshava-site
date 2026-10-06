@@ -137,7 +137,7 @@ export function Select<T extends string>({ value, onChange, options, placeholder
         <ChevronDown className={cn('size-4 shrink-0 text-muted-foreground transition-transform duration-200', open && 'rotate-180 text-brand-700')} />
       </button>
 
-      {createPortal(
+      {typeof document !== 'undefined' && createPortal(
       <AnimatePresence>
         {open && (
           <motion.ul

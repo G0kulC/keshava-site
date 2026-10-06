@@ -35,6 +35,7 @@ export function ContactPanel() {
           <p className="font-display text-lg font-semibold text-brand-900">{site.legalName}</p>
           <p className="text-xs text-muted-foreground">{site.hours}</p>
         </div>
+        {status && (
         <span
           className={cn(
             'inline-flex shrink-0 items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold',
@@ -47,8 +48,9 @@ export function ContactPanel() {
           </span>
           {status.label}
         </span>
+        )}
       </div>
-      <p className="mt-1 text-xs text-muted-foreground">{status.detail}</p>
+      <p className="mt-1 min-h-4 text-xs text-muted-foreground">{status?.detail}</p>
 
       {/* actions */}
       <ul className="mt-5 grid gap-2 sm:grid-cols-2">
@@ -65,7 +67,7 @@ export function ContactPanel() {
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-xs text-muted-foreground">{title}</span>
-                <span className="block truncate text-sm font-semibold">{value}</span>
+                <span className="block text-sm font-semibold [overflow-wrap:anywhere]">{value}</span>
               </span>
               <ChevronRight className="size-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-brand-700" />
             </a>

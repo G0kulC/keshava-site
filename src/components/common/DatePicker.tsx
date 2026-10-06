@@ -166,7 +166,7 @@ export function DatePicker({ value, onChange, label = 'Date', placeholder = 'Pic
         )}
       </div>
 
-      {createPortal(
+      {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {open && isSheet && (
             <motion.div

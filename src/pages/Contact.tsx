@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { ChevronDown, Clock, MapPin, Phone } from 'lucide-react'
+import { ChevronDown, Clock, MapPin, Navigation, Phone } from 'lucide-react'
 import { useState } from 'react'
+import { ContactPanel } from '@/components/common/ContactPanel'
 import { PageHero } from '@/components/common/PageHero'
 import { Select } from '@/components/common/Select'
 import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
@@ -34,42 +35,17 @@ export default function Contact() {
     .filter(Boolean)
     .join('\n')
 
-  const cards = [
-    { icon: Phone, title: 'Call us', value: site.phone, href: telLink, hint: 'Urgent dispatch & production queries' },
-    { icon: WhatsAppIcon, title: 'WhatsApp', value: 'Chat now', href: waLink(`Hello ${site.name}!`), hint: 'Fastest way to get price + timeline' },
-    { icon: MapPin, title: 'Location', value: site.location, hint: 'Share your city for a freight estimate' },
-    { icon: Clock, title: 'Working hours', value: site.hours, hint: 'We reply on WhatsApp after hours too' },
-  ]
-
   return (
     <>
-      <PageHero eyebrow="Contact" title="Send your requirement — we'll reply with a quote & timeline" description="For bulk orders, WhatsApp is the fastest. Prefer a form? Fill it below and it opens WhatsApp pre-filled." />
+      <PageHero
+        eyebrow="Contact"
+        title="Send your requirement — we'll reply with a quote & timeline"
+        description="For bulk orders, WhatsApp is the fastest. Prefer a form? Fill it below and it opens WhatsApp pre-filled."
+        aside={<ContactPanel />}
+      />
 
-      <section className="container-page grid gap-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
-        {cards.map(({ icon: Icon, title, value, href, hint }) => {
-          const inner = (
-            <>
-              <span className="grid size-11 place-items-center rounded-xl bg-brand-50 text-brand-700">
-                <Icon className="size-5" />
-              </span>
-              <p className="mt-4 text-xs font-semibold tracking-wider text-muted-foreground uppercase">{title}</p>
-              <p className="mt-1 font-semibold">{value}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{hint}</p>
-            </>
-          )
-          return href ? (
-            <a key={title} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="rounded-2xl border border-border bg-card p-5 transition hover:border-brand-600/50 hover:shadow-lg">
-              {inner}
-            </a>
-          ) : (
-            <div key={title} className="rounded-2xl border border-border bg-card p-5">
-              {inner}
-            </div>
-          )
-        })}
-      </section>
 
-      <section className="container-page grid gap-10 pb-8 lg:grid-cols-2">
+      <section className="container-page grid gap-10 py-12 lg:grid-cols-2">
         <form
           className="grid gap-4 rounded-3xl border border-border bg-card p-6 sm:grid-cols-2 md:p-8"
           onSubmit={(e) => {
@@ -120,6 +96,37 @@ export default function Contact() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+      {/* Visit us */}
+      <section className="container-page pt-8 pb-4">
+        <div className="grid overflow-hidden rounded-[2rem] border border-border bg-card lg:grid-cols-[1fr_1.4fr]">
+          <div className="flex flex-col justify-center gap-4 p-6 md:p-10">
+            <p className="text-xs font-bold tracking-[0.2em] text-brand-600 uppercase">Visit us</p>
+            <h2 className="text-3xl font-semibold text-brand-900">{site.legalName}</h2>
+            <p className="flex gap-2 text-foreground/80">
+              <MapPin className="mt-1 size-4 shrink-0 text-brand-600" /> {site.address}
+            </p>
+            <p className="flex gap-2 text-foreground/80">
+              <Clock className="mt-1 size-4 shrink-0 text-brand-600" /> {site.hours}
+            </p>
+            <p className="text-sm text-muted-foreground">Please message us before visiting so we can keep samples ready for you.</p>
+            <div className="flex flex-wrap gap-2">
+              <a href={site.mapsUrl} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center gap-2 rounded-full bg-brand-700 px-5 text-sm font-semibold text-white hover:bg-brand-900">
+                <Navigation className="size-4" /> Get directions
+              </a>
+              <a href={telLink} className="inline-flex h-11 items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold hover:border-brand-600">
+                <Phone className="size-4" /> Call before visiting
+              </a>
+            </div>
+          </div>
+          <iframe
+            title={`Map to ${site.legalName}`}
+            src={`https://www.google.com/maps?q=${site.geo ? `${site.geo.lat},${site.geo.lng}` : encodeURIComponent(site.address)}&z=17&output=embed`}
+            className="h-72 w-full border-0 lg:h-full lg:min-h-[380px]"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
       </section>
     </>

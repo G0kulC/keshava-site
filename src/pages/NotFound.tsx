@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { paths } from '@/config/routes'
 
 export default function NotFound() {
   return (
@@ -10,7 +11,7 @@ export default function NotFound() {
         <Link to="/" className="rounded-full bg-brand-700 px-6 py-3 text-sm font-semibold text-white">
           Go home
         </Link>
-        <Link to="/shop" className="rounded-full border border-border px-6 py-3 text-sm font-semibold">
+        <Link to={paths.shop} className="rounded-full border border-border px-6 py-3 text-sm font-semibold">
           Browse shop
         </Link>
       </div>

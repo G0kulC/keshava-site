@@ -4,6 +4,7 @@ import { PageHero } from '@/components/common/PageHero'
 import { BlurFade } from '@/components/ui/blur-fade'
 import { posts } from '@/data'
 import { formatDate } from '@/lib/format'
+import { paths } from '@/config/routes'
 
 export default function Blog() {
   const [lead, ...rest] = posts
@@ -13,7 +14,7 @@ export default function Blog() {
       <section className="container-page py-12">
         {lead && (
           <BlurFade>
-            <Link to={`/blog/${lead.slug}`} className="group grid overflow-hidden rounded-3xl border border-border bg-card md:grid-cols-2">
+            <Link to={paths.post(lead.slug)} className="group grid overflow-hidden rounded-3xl border border-border bg-card md:grid-cols-2">
               <div className="aspect-[16/10] overflow-hidden bg-muted md:aspect-auto">
                 {lead.cover && <img src={lead.cover} alt="" className="size-full object-cover transition duration-500 group-hover:scale-105" />}
               </div>
@@ -31,7 +32,7 @@ export default function Blog() {
         <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {rest.map((p, i) => (
             <BlurFade key={p.slug} inView delay={i * 0.05}>
-              <Link to={`/blog/${p.slug}`} className="group block">
+              <Link to={paths.post(p.slug)} className="group block">
                 <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
                   {p.cover && <img src={p.cover} alt="" loading="lazy" className="size-full object-cover transition duration-500 group-hover:scale-105" />}
                 </div>

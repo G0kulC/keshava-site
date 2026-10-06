@@ -19,6 +19,7 @@ import { categories, featuredProducts, posts, products } from '@/data'
 import { formatDate } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { waLink } from '@/lib/whatsapp'
+import { paths } from '@/config/routes'
 
 const trust = [
   { icon: Leaf, text: 'Eco-friendly & reusable' },
@@ -48,7 +49,7 @@ export default function Home() {
           <div>
             <BlurFade delay={0.05}>
               <Link
-                to="/customized-bags"
+                to={paths.customBags}
                 className="group mb-6 inline-flex min-h-9 items-center rounded-full border border-brand-600/20 bg-brand-50 px-1 py-1 pr-3 text-xs font-medium"
               >
                 <span className="mr-2 rounded-full bg-brand-700 px-2 py-0.5 text-[10px] font-bold text-white uppercase">New</span>
@@ -58,6 +59,9 @@ export default function Home() {
             </BlurFade>
             <BlurFade delay={0.12}>
               <h1 className="text-[2.6rem] leading-[1.05] font-semibold text-brand-900 sm:text-6xl lg:text-7xl">
+                <span className="mb-4 block font-sans text-sm font-bold tracking-[0.14em] text-brand-600 uppercase sm:text-base">
+                  Non-woven bags manufacturer in Bhavani, Erode
+                </span>
                 Beautiful bags for
                 <RotatingWord
                   words={['weddings.', 'temples.', 'your shop.', 'your brand.']}
@@ -72,7 +76,7 @@ export default function Home() {
             </BlurFade>
             <BlurFade delay={0.28}>
               <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Link to="/shop">
+                <Link to={paths.shop}>
                   <ShimmerButton background="var(--brand-700)" className="h-12 px-7 text-[15px] font-semibold">
                     Browse all bags <ArrowRight className="ml-2 size-4" />
                   </ShimmerButton>
@@ -121,12 +125,12 @@ export default function Home() {
           eyebrow="Shop by category"
           title="Find the right bag, fast"
           description="Every category is available in bulk, with custom printing on request."
-          action={<ViewAll to="/shop" label="All products" />}
+          action={<ViewAll to={paths.shop} label="All products" />}
         />
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           {categories.map((c, i) => (
             <BlurFade key={c.slug} inView delay={i * 0.06}>
-              <Link to={`/shop?category=${c.slug}`} className="block h-full">
+              <Link to={paths.category(c.slug)} className="block h-full">
                 <MagicCard className="h-full rounded-2xl" gradientColor="oklch(0.94 0.045 150)" gradientFrom="var(--marigold)" gradientTo="var(--brand-600)">
                   <div className="p-3">
                     <div className="aspect-square overflow-hidden rounded-xl bg-muted">
@@ -171,7 +175,7 @@ export default function Home() {
       {/* ───────────── Featured ───────────── */}
       <section className="bg-linear-to-b from-brand-50/70 to-transparent py-20">
         <div className="container-page">
-          <SectionHeading eyebrow="Best value" title="Popular right now" action={<ViewAll to="/shop" label="Shop all" />} />
+          <SectionHeading eyebrow="Best value" title="Popular right now" action={<ViewAll to={paths.shop} label="Shop all" />} />
           <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             {featured.map((p) => (
               <ProductCard key={p.id} product={p} />
@@ -202,10 +206,10 @@ export default function Home() {
               Choose the bag type, size, GSM and colour — we handle design support, printing and dispatch. Ideal for supermarkets, textile shops, jewellers and events.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link to="/customized-bags" className="inline-flex h-12 items-center gap-2 rounded-full bg-marigold px-7 font-semibold text-brand-900 transition hover:brightness-105">
+              <Link to={paths.customBags} className="inline-flex h-12 items-center gap-2 rounded-full bg-marigold px-7 font-semibold text-brand-900 transition hover:brightness-105">
                 Design your bag <ArrowRight className="size-4" />
               </Link>
-              <Link to="/bulk-order" className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 font-semibold transition hover:bg-white/10">
+              <Link to={paths.bulkOrder} className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 font-semibold transition hover:bg-white/10">
                 Bulk enquiry
               </Link>
             </div>
@@ -215,11 +219,11 @@ export default function Home() {
 
       {/* ───────────── Blog ───────────── */}
       <section className="container-page py-20">
-        <SectionHeading eyebrow="Guides" title="Learn before you buy" action={<ViewAll to="/blog" label="All articles" />} />
+        <SectionHeading eyebrow="Guides" title="Learn before you buy" action={<ViewAll to={paths.blog} label="All articles" />} />
         <div className="grid gap-6 md:grid-cols-3">
           {posts.slice(0, 3).map((p, i) => (
             <BlurFade key={p.slug} inView delay={i * 0.08}>
-              <Link to={`/blog/${p.slug}`} className="group block">
+              <Link to={paths.post(p.slug)} className="group block">
                 <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
                   {p.cover && <img src={p.cover} alt="" loading="lazy" className="size-full object-cover transition duration-500 group-hover:scale-105" />}
                 </div>

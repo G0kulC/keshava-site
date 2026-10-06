@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { QuoteItem } from '@/types'
 
 const STORAGE_KEY = 'kf.quote.v1'
@@ -26,10 +26,18 @@ const load = (): QuoteItem[] => {
 }
 
 export function QuoteProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<QuoteItem[]>(load)
+  const [items, setItems] = useState<QuoteItem[]>([])
   const [open, setOpen] = useState(false)
+  const loaded = useRef(false)
+
+  // Read the saved cart after mount so prerendered HTML and first client render match.
+  useEffect(() => {
+    setItems(load())
+    loaded.current = true
+  }, [])
 
   useEffect(() => {
+    if (!loaded.current) return
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
     } catch {

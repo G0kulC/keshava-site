@@ -8,6 +8,7 @@ import { nav, site } from '@/config/site'
 import { cn } from '@/lib/utils'
 import { telLink } from '@/lib/whatsapp'
 import { useQuote } from '@/store/quote'
+import { paths } from '@/config/routes'
 
 const announcements = ['Bulk orders', 'Custom logo printing', 'On-time dispatch', `Made in ${site.location}`]
 
@@ -120,7 +121,7 @@ export function Header() {
               </AnimatePresence>
             </button>
             <Link
-              to="/bulk-order"
+              to={paths.bulkOrder}
               className="hidden h-10 items-center rounded-full bg-brand-700 px-5 font-display text-[15px] font-semibold tracking-[-0.01em] text-white transition hover:bg-brand-900 md:flex"
             >
               Get bulk quote
