@@ -32,10 +32,19 @@ export function HomeHeroShowcase() {
   const reduce = useReducedMotion()
 
   // Variable products with real pack pricing, one per name, mixed categories.
+  // Needs at least 2 packs: single-price products have no pack to pick (and `every` on an
+  // empty list is true, which used to let them through with no price to show).
   const demo = useMemo(() => {
     const seen = new Set<string>()
     return products
-      .filter((p) => p.variants.slice(0, 3).every((v) => v.price != null) && p.images.length && !seen.has(p.name) && seen.add(p.name))
+      .filter(
+        (p) =>
+          p.variants.length >= 2 &&
+          p.variants.slice(0, 3).every((v) => v.price != null) &&
+          p.images.length &&
+          !seen.has(p.name) &&
+          seen.add(p.name),
+      )
       .slice(0, 5)
   }, [])
 
