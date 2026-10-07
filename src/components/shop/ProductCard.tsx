@@ -93,8 +93,8 @@ export function ProductCard({ product, priority }: { product: Product; priority?
         {product.variants.length > 0 && (
           <div className="mt-3">
             <p className="mb-1.5 text-[11px] font-medium text-muted-foreground">Pack size</p>
-            {/* one swipeable row on phones, wraps on larger cards */}
-            <div className="-mx-3 flex gap-1.5 overflow-x-auto px-3 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden" role="radiogroup" aria-label="Pack size">
+            {/* wraps onto a second line on narrow cards so no chip gets cut off at the card edge */}
+            <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Pack size">
               {product.variants.slice(0, MAX_CHIPS).map((v) => {
                 const on = v.id === variantId
                 return (

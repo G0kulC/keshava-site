@@ -11,6 +11,7 @@ import {
   Wand2,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { WhatsAppIcon } from '@/components/common/WhatsAppIcon'
 import { site } from '@/config/site'
 import { cn } from '@/lib/utils'
@@ -115,11 +116,24 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
     back: [],
   }))
   const [selected, setSelected] = useState<string | null>(null)
+  // Text layer being typed into directly on the bag.
+  const [editing, setEditing] = useState<string | null>(null)
   const [busy, setBusy] = useState<'upload' | 'export' | null>(null)
   const [error, setError] = useState('')
   const svgRef = useRef<SVGSVGElement>(null)
   const fileRef = useRef<HTMLInputElement>(null)
-  const drag = useRef<{ id: string; mode: 'move' | 'resize'; dx: number; dy: number; startDist: number; startSize: number } | null>(null)
+  const editRef = useRef<HTMLInputElement>(null)
+  const drag = useRef<{
+    id: string
+    mode: 'move' | 'resize'
+    dx: number
+    dy: number
+    startDist: number
+    startSize: number
+    startX: number
+    startY: number
+    moved: boolean
+  } | null>(null)
 
   const current = layers[side]
   const sel = current.find((l) => l.id === selected) ?? null
@@ -156,6 +170,30 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
   const removeLayer = (id: string) => {
     setLayers((all) => ({ ...all, [side]: all[side].filter((l) => l.id !== id) }))
     setSelected(null)
+    setEditing(null)
+  }
+
+  /**
+   * Open the on-bag text box. flushSync renders it right away so focus() runs inside the
+   * tap itself — phones only raise the keyboard for focus that happens during a user gesture.
+   */
+  const startEditing = (id: string, selectAll = false) => {
+    flushSync(() => {
+      setSelected(id)
+      setEditing(id)
+    })
+    const input = editRef.current
+    if (!input) return
+    input.focus()
+    if (selectAll) input.select()
+    else input.setSelectionRange(input.value.length, input.value.length)
+  }
+
+  const stopEditing = () => {
+    const l = current.find((x) => x.id === editing)
+    // An emptied text box has nothing to print — drop it.
+    if (l?.kind === 'text' && !l.text.trim()) removeLayer(l.id)
+    setEditing(null)
   }
 
   // ── upload
@@ -200,6 +238,7 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
   const startDrag = (e: React.PointerEvent, l: Layer, mode: 'move' | 'resize') => {
     e.stopPropagation()
     e.preventDefault()
+    if (editing && editing !== l.id) stopEditing()
     setSelected(l.id)
     const p = toSvg(e)
     drag.current = {
@@ -209,6 +248,9 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
       dy: p.y - l.y,
       startDist: Math.hypot(p.x - l.x, p.y - l.y) || 1,
       startSize: l.kind === 'image' ? l.w : l.size,
+      startX: p.x,
+      startY: p.y,
+      moved: false,
     }
     svgRef.current?.setPointerCapture(e.pointerId)
   }
@@ -219,6 +261,9 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
     const l = current.find((x) => x.id === d.id)
     if (!l) return
     const p = toSvg(e)
+    // Small finger wobble still counts as a tap, not a drag.
+    if (!d.moved && Math.hypot(p.x - d.startX, p.y - d.startY) < 4) return
+    d.moved = true
     if (d.mode === 'move') {
       patch(l.id, clampPos(l, p.x - d.dx, p.y - d.dy))
     } else {
@@ -228,10 +273,15 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
     }
   }
 
-  const endDrag = () => (drag.current = null)
+  const endDrag = () => {
+    const d = drag.current
+    drag.current = null
+    // A tap (no drag) on text opens typing right on the bag.
+    if (d && d.mode === 'move' && !d.moved && current.find((l) => l.id === d.id)?.kind === 'text') startEditing(d.id)
+  }
 
   const onKey = (e: React.KeyboardEvent) => {
-    if (!sel) return
+    if (!sel || (e.target as HTMLElement).tagName === 'INPUT') return
     const step = e.shiftKey ? 10 : 2
     const moves: Record<string, [number, number]> = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }
     if (moves[e.key]) {
@@ -245,6 +295,7 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
   // ── export / share
   const exportPng = async () => {
     setSelected(null)
+    setEditing(null)
     await new Promise((r) => requestAnimationFrame(() => r(null)))
     return svgToPng(svgRef.current!)
   }
@@ -299,6 +350,7 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
     setLayers((all) => ({ ...all, back: all.front.map((l) => ({ ...l, id: uid() })) }))
     setSide('back')
     setSelected(null)
+    setEditing(null)
   }
 
   // ───────────────────────── render ─────────────────────────
@@ -314,6 +366,7 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
                 role="tab"
                 aria-selected={side === s}
                 onClick={() => {
+                  if (editing) stopEditing()
                   setSide(s)
                   setSelected(null)
                 }}
@@ -344,7 +397,10 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
           onPointerMove={onMove}
           onPointerUp={endDrag}
           onPointerCancel={endDrag}
-          onPointerDown={() => setSelected(null)}
+          onPointerDown={() => {
+            if (editing) stopEditing()
+            setSelected(null)
+          }}
           onKeyDown={onKey}
         >
           <BagDefs />
@@ -377,6 +433,8 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
                       fontSize={l.size}
                       fontWeight={l.font.includes('Brush') ? 400 : 700}
                       fill={l.color}
+                      // While typing, the on-bag text box draws the text instead.
+                      opacity={editing === l.id ? 0 : 1}
                     >
                       {l.text || ' '}
                     </text>
@@ -395,6 +453,34 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
                   return (
                     <>
                       <rect x={-w / 2 - 6} y={-h / 2 - 6} width={w + 12} height={h + 12} fill="none" stroke="var(--brand-600)" strokeWidth="1.5" strokeDasharray="4 3" rx="4" pointerEvents="none" />
+                      {sel.kind === 'text' && editing === sel.id && (
+                        // Real input laid exactly over the text, so typing happens on the bag itself.
+                        <foreignObject x={-P.w * 0.75} y={-sel.size * 0.8} width={P.w * 1.5} height={sel.size * 1.6}>
+                          <input
+                            ref={editRef}
+                            value={sel.text}
+                            onChange={(e) => patch(sel.id, { text: e.target.value })}
+                            onBlur={stopEditing}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === 'Escape') e.currentTarget.blur()
+                            }}
+                            onPointerDown={(e) => e.stopPropagation()}
+                            maxLength={40}
+                            enterKeyHint="done"
+                            aria-label="Bag text"
+                            placeholder="Type here"
+                            style={{
+                              fontFamily: sel.font,
+                              fontSize: sel.size,
+                              fontWeight: sel.font.includes('Brush') ? 400 : 700,
+                              color: sel.color,
+                              caretColor: sel.color,
+                              userSelect: 'text',
+                            }}
+                            className="block size-full border-0 bg-transparent p-0 text-center leading-none outline-none placeholder:text-current placeholder:opacity-50"
+                          />
+                        </foreignObject>
+                      )}
                       <circle
                         cx={w / 2 + 6}
                         cy={h / 2 + 6}
@@ -414,7 +500,7 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
         </svg>
 
         <p className="mt-2 text-center text-xs text-muted-foreground">
-          Drag to move · pull the round handle to resize · dashed box = printable area
+          Tap text to type · drag to move · pull the round handle to resize · dashed box = printable area
         </p>
       </div>
 
@@ -467,9 +553,10 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
               {busy === 'upload' ? <Loader2 className="size-4 animate-spin" /> : <ImagePlus className="size-4" />} Upload logo
             </button>
             <button
-              onClick={() =>
+              onClick={() => {
+                const id = uid()
                 addLayer({
-                  id: uid(),
+                  id,
                   kind: 'text',
                   text: 'Your text',
                   x: P.x + P.w / 2,
@@ -479,7 +566,9 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
                   color: isLight(color) ? '#1d1d1f' : '#ffffff',
                   font: fonts[0].css,
                 })
-              }
+                // Jump straight into typing on the bag, with the placeholder selected.
+                startEditing(id, true)
+              }}
               className="flex h-12 items-center justify-center gap-2 rounded-xl border-2 border-border text-sm font-semibold transition hover:border-brand-600"
             >
               <Type className="size-4" /> Add text
@@ -507,14 +596,12 @@ export function BagDesigner({ kind, onKind, color, onColor, onSidesChange }: Pro
 
               {sel.kind === 'text' && (
                 <>
-                  <input
-                    value={sel.text}
-                    onChange={(e) => patch(sel.id, { text: e.target.value })}
-                    maxLength={40}
-                    className="h-11 w-full rounded-xl border border-input bg-background px-3.5 text-sm outline-none focus:border-brand-600"
-                    aria-label="Text"
-                    placeholder="Shop name, phone, tagline…"
-                  />
+                  <button
+                    onClick={() => startEditing(sel.id)}
+                    className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-brand-600/40 bg-background text-sm font-semibold text-brand-700 transition hover:border-brand-600"
+                  >
+                    <Type className="size-4" /> {editing === sel.id ? 'Typing on the bag…' : 'Tap the text on the bag to type'}
+                  </button>
                   <div className="flex flex-wrap gap-1.5">
                     {fonts.map((f) => (
                       <button
