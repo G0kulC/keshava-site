@@ -1,4 +1,5 @@
 import { absolute } from '@/config/routes'
+import { site } from '@/config/site'
 import type { PageMeta } from './meta'
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -19,7 +20,7 @@ const metaTags = (m: PageMeta) => {
     } as Record<string, string>,
     props: {
       'og:type': m.type === 'article' ? 'article' : m.type === 'product' ? 'product' : 'website',
-      'og:site_name': 'Keshava Fabrics',
+      'og:site_name': site.name,
       'og:locale': 'en_IN',
       'og:title': m.title,
       'og:description': m.description,

@@ -104,7 +104,7 @@ export default function Contact() {
         <div className="grid overflow-hidden rounded-[2rem] border border-border bg-card lg:grid-cols-[1fr_1.4fr]">
           <div className="flex flex-col justify-center gap-4 p-6 md:p-10">
             <p className="text-xs font-bold tracking-[0.2em] text-brand-600 uppercase">Visit us</p>
-            <h2 className="text-3xl font-semibold text-brand-900">{site.legalName}</h2>
+            <h2 className="text-3xl font-semibold text-brand-900">{site.name}</h2>
             <p className="flex gap-2 text-foreground/80">
               <MapPin className="mt-1 size-4 shrink-0 text-brand-600" /> {site.address}
             </p>
@@ -122,7 +122,7 @@ export default function Contact() {
             </div>
           </div>
           <iframe
-            title={`Map to ${site.legalName}`}
+            title={`Map to ${site.name}`}
             src={mapEmbedUrl}
             className="h-72 w-full border-0 lg:h-full lg:min-h-[380px]"
             loading="lazy"

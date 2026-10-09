@@ -129,9 +129,9 @@ export const areaPages: AreaPage[] = [
     eyebrow: 'Bhavani, Erode district',
     h1: 'Visit Our Bag Unit in Bhavani',
     title: 'Bag Shop & Factory in Bhavani – Visit or Order on WhatsApp',
-    description: `Sri Keshava Fabrics, ${site.address}. Non-woven, thamboolam, kattapai & custom printed bags in bulk. Visit, call or WhatsApp ${site.phone}.`,
+    description: `${site.name}, ${site.address}. Non-woven, thamboolam, kattapai & custom printed bags in bulk. Visit, call or WhatsApp ${site.phone}.`,
     intro: [
-      `Sri Keshava Fabrics is a non-woven bag manufacturer right here in Bhavani, near Madha Kovil on Anna Nagar 2nd Street. Shops, temples and families in Bhavani can visit us, see samples and collect their order directly — no courier wait.`,
+      `${site.name} is a non-woven bag manufacturer right here in Bhavani, near Madha Kovil on Anna Nagar 2nd Street. Shops, temples and families in Bhavani can visit us, see samples and collect their order directly — no courier wait.`,
       'We make thamboolam and return gift bags for weddings, kattapai and shopping bags for local shops, and custom printed bags with your shop name or logo, in a GSM range of 20 to 150.',
     ],
     highlights: [

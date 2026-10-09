@@ -32,7 +32,7 @@ export default function Category() {
             <h1 className="text-4xl font-semibold text-balance text-brand-900 md:text-5xl">{seo?.h1 ?? cat.name}</h1>
             {seo?.tamil && <p className="mt-2 text-sm font-medium text-brand-700">{seo.tamil}</p>}
             <div className="mt-5 max-w-2xl space-y-3 text-[15px] leading-relaxed text-foreground/80 md:text-base">
-              {(seo?.intro ?? [`${cat.name} in bulk from ${site.legalName}, ${site.location}.`]).map((p) => (
+              {(seo?.intro ?? [`${cat.name} in bulk from ${site.name}, ${site.location}.`]).map((p) => (
                 <p key={p.slice(0, 24)}>{p}</p>
               ))}
             </div>
@@ -54,7 +54,7 @@ export default function Category() {
           {seo?.uses && (
             <BlurFade delay={0.1}>
               <div className="rounded-[2rem] border border-border bg-card p-6 shadow-xl shadow-brand-900/5">
-                {cat.image && <img src={cat.image} alt={`${cat.name} by Keshava Fabrics`} width={600} height={600} className="mb-5 aspect-[16/10] w-full rounded-2xl object-cover" />}
+                {cat.image && <img src={cat.image} alt={`${cat.name} by ${site.name}`} width={600} height={600} className="mb-5 aspect-[16/10] w-full rounded-2xl object-cover" />}
                 <p className="text-xs font-bold tracking-[0.18em] text-brand-600 uppercase">Popular for</p>
                 <ul className="mt-3 grid grid-cols-2 gap-2">
                   {seo.uses.map((u) => (
