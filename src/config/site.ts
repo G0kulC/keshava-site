@@ -3,8 +3,8 @@ import { paths } from '@/config/routes'
 // Single source of truth for business details. Later this can come from the admin panel.
 export const site = {
   // Public name: must match the signboard and the Google Business Profile exactly.
-  name: 'Keshava Fabrics',
-  // Registered name, used only on the legal policy pages and in structured data.
+  name: 'Sri Keshava Fabrics',
+  // Registered name for the legal policy pages and structured data (same as the public name today).
   legalName: 'Sri Keshava Fabrics',
   tagline: 'Eco-friendly bags, made for every occasion',
   founder: 'Mr. Mahendran',

@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
+import { site } from '@/config/site'
 import { cn } from '@/lib/utils'
 
 // Leaf mark is cropped from the official logo (public/brand/keshava-fabrics.png);
 // the wordmark is set in type so it stays crisp and readable at header size.
 export function Logo({ className, light }: { className?: string; light?: boolean }) {
   return (
-    <Link to="/" className={cn('group flex items-center gap-2', className)} aria-label="Keshava Fabrics home">
+    <Link to="/" className={cn('group flex items-center gap-2', className)} aria-label={`${site.name} home`}>
       <img
         src="/brand/leaf.png"
         alt=""

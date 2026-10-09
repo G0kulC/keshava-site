@@ -18,7 +18,7 @@ export interface PageMeta {
 }
 
 const DEFAULT_IMAGE = '/brand/keshava-fabrics.png'
-const BRAND = 'Keshava Fabrics'
+const BRAND = site.name
 
 const clip = (s: string, n = 158) => (s.length <= n ? s : `${s.slice(0, n - 1).replace(/\s+\S*$/, '')}…`)
 const TITLE_MAX = 65
@@ -46,7 +46,7 @@ export function localBusinessLd() {
     '@id': businessId,
     name: site.name,
     legalName: site.legalName,
-    alternateName: ['Keshava Fabrics Bhavani', 'Keshava Fabrics Nonwoven Rolls and Bags'],
+    alternateName: ['Keshava Fabrics', 'Keshava Fabrics Bhavani', 'KESHAVA FABRICS Nonwoven Rolls and Bags'],
     description:
       'Manufacturer and bulk supplier of non-woven bags, thamboolam / return gift bags, kattapai and custom printed bags in Bhavani, Erode district, Tamil Nadu.',
     url: SITE_URL,
@@ -142,12 +142,12 @@ export function getPageMeta(pathname: string): PageMeta {
   if (path === paths.home)
     return {
       ...page({
-        title: 'Non-Woven Bags Manufacturer in Bhavani, Erode | Keshava Fabrics',
+        title: `Non-Woven Bags Manufacturer, Bhavani Erode | ${site.name}`,
         description: `${site.name}, Bhavani (Erode) – manufacturer of non-woven bags, thamboolam & return gift bags, kattapai and custom printed bags. Bulk orders across Tamil Nadu. WhatsApp ${site.phone}.`,
         canonical: path,
         jsonLd: [localBusinessLd(), websiteLd()],
       }),
-      title: 'Non-Woven Bags Manufacturer in Bhavani, Erode | Keshava Fabrics',
+      title: `Non-Woven Bags Manufacturer, Bhavani Erode | ${site.name}`,
     }
 
   if (path === paths.shop)
@@ -172,7 +172,7 @@ export function getPageMeta(pathname: string): PageMeta {
       const items = products.filter((p) => p.categories.includes(cat.slug))
       return page({
         title: seo?.title ?? `${cat.name} in Bulk – Bhavani, Erode`,
-        description: seo?.description ?? `${cat.name} from Keshava Fabrics, Bhavani. Bulk orders across Tamil Nadu.`,
+        description: seo?.description ?? `${cat.name} from ${site.name}, Bhavani. Bulk orders across Tamil Nadu.`,
         canonical: paths.category(cat.slug),
         image: cat.image ?? DEFAULT_IMAGE,
         jsonLd: [
@@ -210,7 +210,7 @@ export function getPageMeta(pathname: string): PageMeta {
         description:
           name !== p.name
             ? `${name}: ${p.summary || 'bulk packs and custom printing available.'}`
-            : p.summary || `${p.name} from Keshava Fabrics, Bhavani, Erode. Bulk packs and custom printing available.`,
+            : p.summary || `${p.name} from ${site.name}, Bhavani, Erode. Bulk packs and custom printing available.`,
         canonical: paths.product(p.slug),
         image: p.images[0]?.full ?? DEFAULT_IMAGE,
         type: 'product',

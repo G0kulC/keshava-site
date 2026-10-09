@@ -319,7 +319,7 @@ export const policyPages: Policy[] = [
       {
         id: 'about',
         heading: 'About these terms',
-        blocks: [{ p: `This website is operated by ${site.name}${t.legalName ? ` (${t.legalName})` : ''}, ${site.location}. By using the website or placing an order with us, you agree to these terms together with our Shipping, Return & Refund, Bulk Order and Privacy policies.` }],
+        blocks: [{ p: `This website is operated by ${site.name}${t.legalName && t.legalName !== site.name ? ` (${t.legalName})` : ''}, ${site.location}. By using the website or placing an order with us, you agree to these terms together with our Shipping, Return & Refund, Bulk Order and Privacy policies.` }],
       },
       {
         id: 'products',

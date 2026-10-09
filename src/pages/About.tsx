@@ -123,7 +123,7 @@ export default function About() {
       {/* ───────── Story ───────── */}
       <section className="container-page grid items-center gap-10 py-10 lg:grid-cols-2 lg:gap-16">
         <BlurFade inView className="relative">
-          <img src="/images/about/about-12.webp" alt="Bag production machine at the Keshava Fabrics unit" loading="lazy" className="aspect-[4/5] w-full rounded-[2rem] object-cover shadow-xl" />
+          <img src="/images/about/about-12.webp" alt={`Bag production machine at the ${site.name} unit`} loading="lazy" className="aspect-[4/5] w-full rounded-[2rem] object-cover shadow-xl" />
           <div className="absolute -right-3 -bottom-5 rounded-2xl border border-border bg-card p-4 shadow-lg sm:right-6">
             <p className="font-heading text-3xl font-semibold text-brand-900">
               <NumberTicker value={products.length} className="text-brand-900" />+
@@ -264,7 +264,7 @@ function HeroCollage() {
     <div className="relative mx-auto w-full max-w-lg pb-10 lg:pb-0">
       <motion.img
         src="/images/about/about-2.webp"
-        alt="Finished bags stacked and ready for dispatch at the Keshava Fabrics warehouse"
+        alt={`Finished bags stacked and ready for dispatch at the ${site.name} warehouse`}
         className="aspect-[4/3] w-full rounded-[2rem] border-4 border-white object-cover shadow-2xl shadow-brand-900/15"
         initial={{ opacity: 0, y: 20, rotate: -2 }}
         animate={{ opacity: 1, y: 0, rotate: -1 }}
@@ -272,7 +272,7 @@ function HeroCollage() {
       />
       <motion.img
         src="/images/about/about-12.webp"
-        alt="Bag production at the Keshava Fabrics unit"
+        alt={`Bag production at the ${site.name} unit`}
         className="absolute -bottom-2 -left-3 w-[38%] rounded-2xl border-4 border-white object-cover shadow-xl sm:-left-6 lg:-bottom-10"
         style={{ aspectRatio: '3 / 4' }}
         initial={{ opacity: 0, y: 30, rotate: 4 }}
