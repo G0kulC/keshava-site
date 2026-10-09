@@ -33,7 +33,7 @@ export function ContactPanel() {
       {/* status */}
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="font-display text-lg font-semibold text-brand-900">{site.legalName}</p>
+          <p className="font-display text-lg font-semibold text-brand-900">{site.name}</p>
           <p className="text-xs text-muted-foreground">{site.hours}</p>
         </div>
         {status && (

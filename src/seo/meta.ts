@@ -44,8 +44,9 @@ export function localBusinessLd() {
     '@context': 'https://schema.org',
     '@type': 'WholesaleStore',
     '@id': businessId,
-    name: site.legalName,
-    alternateName: [site.name, 'Keshava Fabrics Bhavani'],
+    name: site.name,
+    legalName: site.legalName,
+    alternateName: ['Keshava Fabrics Bhavani', 'Keshava Fabrics Nonwoven Rolls and Bags'],
     description:
       'Manufacturer and bulk supplier of non-woven bags, thamboolam / return gift bags, kattapai and custom printed bags in Bhavani, Erode district, Tamil Nadu.',
     url: SITE_URL,
@@ -142,7 +143,7 @@ export function getPageMeta(pathname: string): PageMeta {
     return {
       ...page({
         title: 'Non-Woven Bags Manufacturer in Bhavani, Erode | Keshava Fabrics',
-        description: `${site.legalName}, Bhavani (Erode) – manufacturer of non-woven bags, thamboolam & return gift bags, kattapai and custom printed bags. Bulk orders across Tamil Nadu. WhatsApp ${site.phone}.`,
+        description: `${site.name}, Bhavani (Erode) – manufacturer of non-woven bags, thamboolam & return gift bags, kattapai and custom printed bags. Bulk orders across Tamil Nadu. WhatsApp ${site.phone}.`,
         canonical: path,
         jsonLd: [localBusinessLd(), websiteLd()],
       }),
@@ -280,8 +281,8 @@ export function getPageMeta(pathname: string): PageMeta {
 
   if (path === paths.about)
     return page({
-      title: `About Us – ${site.legalName}, Bhavani`,
-      description: `${site.legalName}, founded by ${site.founder}, is a non-woven bag manufacturer in Bhavani, Erode. Consistent GSM, quality checks and on-time dispatch for repeat bulk buyers.`,
+      title: `About Us – ${site.name}, Bhavani`,
+      description: `${site.name}, founded by ${site.founder}, is a non-woven bag manufacturer in Bhavani, Erode. Consistent GSM, quality checks and on-time dispatch for repeat bulk buyers.`,
       canonical: path,
       image: '/images/about/about-2.webp',
       jsonLd: [breadcrumbLd([['About Us', path]]), { '@context': 'https://schema.org', '@type': 'AboutPage', url: absolute(path), about: { '@id': businessId } }, localBusinessLd()],
@@ -290,7 +291,7 @@ export function getPageMeta(pathname: string): PageMeta {
   if (path === paths.contact)
     return page({
       title: 'Contact Us – Bhavani, Erode | WhatsApp for Bulk Quotes',
-      description: `Contact ${site.legalName}: ${site.phone} / ${site.phone2}, ${site.email}. ${site.address}. WhatsApp for the fastest quotation.`,
+      description: `Contact ${site.name}: ${site.phone} / ${site.phone2}, ${site.email}. ${site.address}. WhatsApp for the fastest quotation.`,
       canonical: path,
       jsonLd: [breadcrumbLd([['Contact Us', path]]), { '@context': 'https://schema.org', '@type': 'ContactPage', url: absolute(path), about: { '@id': businessId } }, localBusinessLd()],
     })
@@ -358,7 +359,7 @@ export function getPageMeta(pathname: string): PageMeta {
           image: post.cover ? absolute(post.cover) : undefined,
           datePublished: post.date,
           dateModified: post.date,
-          author: { '@type': 'Organization', name: site.legalName, url: SITE_URL },
+          author: { '@type': 'Organization', name: site.name, url: SITE_URL },
           publisher: { '@id': businessId },
           mainEntityOfPage: absolute(paths.post(post.slug)),
         },

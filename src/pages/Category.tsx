@@ -32,7 +32,7 @@ export default function Category() {
             <h1 className="text-4xl font-semibold text-balance text-brand-900 md:text-5xl">{seo?.h1 ?? cat.name}</h1>
             {seo?.tamil && <p className="mt-2 text-sm font-medium text-brand-700">{seo.tamil}</p>}
             <div className="mt-5 max-w-2xl space-y-3 text-[15px] leading-relaxed text-foreground/80 md:text-base">
-              {(seo?.intro ?? [`${cat.name} in bulk from ${site.legalName}, ${site.location}.`]).map((p) => (
+              {(seo?.intro ?? [`${cat.name} in bulk from ${site.name}, ${site.location}.`]).map((p) => (
                 <p key={p.slice(0, 24)}>{p}</p>
               ))}
             </div>

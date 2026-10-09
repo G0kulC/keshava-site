@@ -181,7 +181,7 @@ export default function About() {
             <img src="/images/about/founder.webp" alt={`${site.founder}, founder of ${site.name}`} loading="lazy" className="size-full min-h-[320px] object-cover" />
             <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-brand-900/85 to-transparent p-6 pt-20 text-white">
               <p className="font-display text-xl font-semibold">{site.founder}</p>
-              <p className="text-sm text-white/80">Founder, {site.legalName}</p>
+              <p className="text-sm text-white/80">Founder, {site.name}</p>
             </div>
           </BlurFade>
           <BlurFade inView delay={0.1}>

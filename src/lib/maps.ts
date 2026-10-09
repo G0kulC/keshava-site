@@ -10,4 +10,4 @@ const pin = site.geo ? `${site.geo.lat},${site.geo.lng}` : null
 export const directionsUrl = pin ? `https://www.google.com/maps/dir/?api=1&destination=${pin}&travelmode=driving` : site.mapsUrl
 
 /** Embedded map with a red pin on the shop. */
-export const mapEmbedUrl = `https://maps.google.com/maps?q=${pin ?? encodeURIComponent(`${site.legalName}, ${site.address}`)}&z=17&hl=en&output=embed`
+export const mapEmbedUrl = `https://maps.google.com/maps?q=${pin ?? encodeURIComponent(`${site.name}, ${site.address}`)}&z=17&hl=en&output=embed`

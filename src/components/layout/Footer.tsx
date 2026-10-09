@@ -72,7 +72,7 @@ export function Footer() {
           <li className="flex gap-2.5">
             <MapPin className="mt-0.5 size-4 shrink-0 text-marigold" />
             <a href={directionsUrl} target="_blank" rel="noreferrer" className="hover:text-marigold">
-              {site.legalName}, {site.address}
+              {site.name}, {site.address}
             </a>
           </li>
           <li className="flex gap-2.5">
@@ -100,7 +100,7 @@ export function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col gap-3 py-6 pb-24 text-xs md:flex-row md:items-center md:justify-between md:pb-6">
-          <p>© {YEAR} {site.legalName}, Bhavani. All rights reserved.</p>
+          <p>© {YEAR} {site.name}, Bhavani. All rights reserved.</p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {policies.map((p) => (
               <li key={p.to}>
